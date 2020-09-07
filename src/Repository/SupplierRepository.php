@@ -13,8 +13,6 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Supplier|null findOneBy(array $criteria, array $orderBy = null)
  * @method Supplier[]    findAll()
  * @method Supplier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- *
- * @author Jacek Wesołowski <jacqu25@yahoo.com>
  */
 class SupplierRepository extends ServiceEntityRepository
 {

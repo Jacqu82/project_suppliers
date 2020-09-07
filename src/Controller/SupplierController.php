@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Supplier;
+use App\Finder\SupplierFinder;
 use App\Form\SupplierType;
 use App\Manager\SupplierManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,9 +23,15 @@ class SupplierController extends AbstractController
      */
     private $supplierManager;
 
-    public function __construct(SupplierManager $supplierManager)
+    /**
+     * @var SupplierFinder
+     */
+    private $supplierFinder;
+
+    public function __construct(SupplierManager $supplierManager, SupplierFinder $supplierFinder)
     {
         $this->supplierManager = $supplierManager;
+        $this->supplierFinder = $supplierFinder;
     }
 
     /**
@@ -38,14 +46,49 @@ class SupplierController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->supplierManager->create($form, true);
+        }
+
+        return $this->render('supplier/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/supplier/show/{id}", name="supplier_show", requirements={"id"="\d+"})
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function show(int $id): Response
+    {
+        return $this->render('supplier/show.html.twig', ['supplier' => $this->supplierFinder->get($id)]);
+    }
+
+    /**
+     * @Route("/supplier/list", name="supplier_list")
+     *
+     * @return Response
+     */
+    public function list(): Response
+    {
+        return $this->render('supplier/list.html.twig', ['suppliers' => $this->supplierFinder->getAll()]);
+    }
+
+    /**
+     * @Route("/supplier/edit/{id}", name="supplier_edit")
+     *
+     * @param Request $request
+     * @param Supplier $supplier
+     * @return Response
+     */
+    public function edit(Request $request, Supplier $supplier): Response
+    {
+        $form = $this->createForm(SupplierType::class, $supplier);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->supplierManager->create($form);
         }
 
-        return $this->render(
-            'supplier/new.html.twig',
-            [
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('supplier/edit.html.twig', ['form' => $form->createView()]);
     }
 }

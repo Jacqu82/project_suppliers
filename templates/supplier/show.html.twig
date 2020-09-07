@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <dt>Dostawca</dt>
+    <dd><h2>{{ supplier.name }}</h2></dd>
+    <dt>Kod dostawcy</dt>
+    <dd>{{ supplier.code }}</dd>
+    <dt>Prefix</dt>
+    <dd>{{ supplier.prefix }}</dd>
+    <dt>Data aktualizacji</dt>
+    <dd>{{ supplier.updated_at|date('d-m-Y H:i:s') }}</dd>
+    <dt>Data utworzenia</dt>
+    <dd>{{ supplier.created_at|date('d-m-Y H:i:s') }}</dd>
+
+{% endblock %}

@@ -23,14 +23,17 @@ class SupplierManager
         $this->entityManager = $entityManager;
     }
 
-    public function create(FormInterface $form): void
+    public function create(FormInterface $form, bool $persist = false): void
     {
         /** @var Supplier $supplier */
         $supplier = $form->getData();
         $supplier->setCode(strtoupper($form->get('name')->getData()));
         $supplier->setPrefix(strtoupper(substr($form->get('name')->getData(), 0, 2)));
 
-        $this->entityManager->persist($supplier);
+        if (true === $persist) {
+            $this->entityManager->persist($supplier);
+        }
+
         $this->entityManager->flush();
     }
 }

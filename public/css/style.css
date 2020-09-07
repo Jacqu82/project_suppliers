@@ -1,5 +1,7 @@
-body
-{
+* {
     color: #bbb;
+}
+
+body {
     background-image: url("../img/darkdenim3.png");
 }

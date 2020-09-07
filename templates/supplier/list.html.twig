@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table class="table table-striped">
+        <tr>
+            <th>Dostawca</th>
+            <th>Kod dostawcy</th>
+            <th>Prefix</th>
+            <th>Data aktualizacji</th>
+            <th>Data utworzenia</th>
+        </tr>
+        {% for supplier in suppliers %}
+            <tr>
+                <td><a href="{{ path('supplier_show', {id: supplier.id}) }}">{{ supplier.name }}</a></td>
+                <td>{{ supplier.code }}</td>
+                <td>{{ supplier.prefix }}</td>
+                <td>{{ supplier.updated_at|date('d-m-Y H:i:s') }}</td>
+                <td>{{ supplier.created_at|date('d-m-Y H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
