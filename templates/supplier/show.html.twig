@@ -13,4 +13,7 @@
     <dt>Data utworzenia</dt>
     <dd>{{ supplier.created_at|date('d-m-Y H:i:s') }}</dd>
 
+    <hr>
+    <a href="{{ path('supplier_list') }}" class="btn btn-info">Wróć do listy</a>
+
 {% endblock %}

@@ -13,7 +13,7 @@
         </tr>
         {% for supplier in suppliers %}
             <tr id="supplier">
-                <td><a href="{{ path('supplier_show', {id: supplier.id}) }}">{{ supplier.name }}</a></td>
+                <td><a href="{{ path('supplier_show', {id: supplier.id}) }}" class="btn btn-secondary">{{ supplier.name }}</a></td>
                 <td>{{ supplier.code }}</td>
                 <td>{{ supplier.prefix }}</td>
                 <td>{{ supplier.updated_at|date('d-m-Y H:i:s') }}</td>
@@ -25,6 +25,9 @@
             </tr>
         {% endfor %}
     </table>
+
+    <h4>Łączna liczba dostawców: <span class="js-count-suppliers">{{ suppliers|length }}</span></h4>
+
     <hr>
     <a href="{{ path('supplier_new') }}" class="btn btn-success">Dodaj nowy</a>
 

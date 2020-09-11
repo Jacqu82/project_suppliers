@@ -55,7 +55,7 @@ class SupplierController extends AbstractController
     }
 
     /**
-     * @Route("/supplier/show/{id}", name="supplier_show", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/supplier/show/{id}", name="supplier_show", requirements={"id"="\d+"})
      *
      * @param int $id
      * @return Response
@@ -66,7 +66,7 @@ class SupplierController extends AbstractController
     }
 
     /**
-     * @Route("/supplier/list", name="supplier_list", methods={"GET"})
+     * @Route("/supplier/list", name="supplier_list")
      *
      * @return Response
      */
@@ -95,7 +95,7 @@ class SupplierController extends AbstractController
     }
 
     /**
-     * @Route("/supplier/delete/{id}", name="supplier_delete", methods={"DELETE"})
+     * @Route("/supplier/delete/{id}", name="supplier_delete")
      *
      * @param Supplier $supplier
      * @return Response
@@ -104,6 +104,6 @@ class SupplierController extends AbstractController
     {
         $this->supplierManager->remove($supplier);
 
-        return new Response(null, 204);
+        return new Response($this->supplierFinder->countAll());
     }
 }

@@ -34,4 +34,14 @@ class SupplierFinder extends AbstractFinder implements FinderInterface
 
         return $queryBuilder->execute()->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function countAll()
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder
+            ->select('COUNT(id) as count')
+            ->from('supplier', 's');
+
+        return $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
+    }
 }

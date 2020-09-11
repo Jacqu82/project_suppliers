@@ -5,3 +5,7 @@
 body {
     background-image: url("../img/darkdenim3.png");
 }
+
+.homepage-header {
+    font-size: 40px;
+}

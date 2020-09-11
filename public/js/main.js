@@ -10,8 +10,9 @@ $(document).ready(function () {
                 type: 'delete',
                 url: href
             })
-                .done(function () {
-                    $this.closest('#supplier').remove();
+                .done(function (count) {
+                    $this.closest('#supplier').fadeOut(1000);
+                    $('.js-count-suppliers').html(count);
                 })
                 .fail(function () {
                     console.warn('wystąpił błąd');
