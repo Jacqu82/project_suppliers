@@ -9,16 +9,23 @@
             <th>Prefix</th>
             <th>Data aktualizacji</th>
             <th>Data utworzenia</th>
+            <th>Akcje</th>
         </tr>
         {% for supplier in suppliers %}
-            <tr>
+            <tr id="supplier">
                 <td><a href="{{ path('supplier_show', {id: supplier.id}) }}">{{ supplier.name }}</a></td>
                 <td>{{ supplier.code }}</td>
                 <td>{{ supplier.prefix }}</td>
                 <td>{{ supplier.updated_at|date('d-m-Y H:i:s') }}</td>
                 <td>{{ supplier.created_at|date('d-m-Y H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('supplier_edit', {id: supplier.id}) }}" class="btn btn-warning">Edytuj</a><br>
+                    <a href="{{ path('supplier_delete', {id: supplier.id}) }}" class="btn btn-danger js-supplier-delete">Usuń</a>
+                </td>
             </tr>
         {% endfor %}
     </table>
+    <hr>
+    <a href="{{ path('supplier_new') }}" class="btn btn-success">Dodaj nowy</a>
 
 {% endblock %}

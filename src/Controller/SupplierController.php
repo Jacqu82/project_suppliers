@@ -47,13 +47,15 @@ class SupplierController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->supplierManager->create($form, true);
+
+            return $this->redirectToRoute('supplier_list');
         }
 
         return $this->render('supplier/new.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/supplier/show/{id}", name="supplier_show", requirements={"id"="\d+"})
+     * @Route("/supplier/show/{id}", name="supplier_show", requirements={"id"="\d+"}, methods={"GET"})
      *
      * @param int $id
      * @return Response
@@ -64,7 +66,7 @@ class SupplierController extends AbstractController
     }
 
     /**
-     * @Route("/supplier/list", name="supplier_list")
+     * @Route("/supplier/list", name="supplier_list", methods={"GET"})
      *
      * @return Response
      */
@@ -90,5 +92,18 @@ class SupplierController extends AbstractController
         }
 
         return $this->render('supplier/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/supplier/delete/{id}", name="supplier_delete", methods={"DELETE"})
+     *
+     * @param Supplier $supplier
+     * @return Response
+     */
+    public function delete(Supplier $supplier): Response
+    {
+        $this->supplierManager->remove($supplier);
+
+        return new Response(null, 204);
     }
 }

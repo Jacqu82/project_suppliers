@@ -36,4 +36,10 @@ class SupplierManager
 
         $this->entityManager->flush();
     }
+
+    public function remove(Supplier $supplier): void
+    {
+        $this->entityManager->remove($supplier);
+        $this->entityManager->flush();
+    }
 }
