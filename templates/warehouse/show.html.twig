@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <dt>Magazyn</dt>
+    <dd><h2>{{ warehouse.name }}</h2></dd>
+    <dt>Dostawca</dt>
+    <dd>{{ warehouse.supplier_name }}</dd>
+    <dt>Data aktualizacji</dt>
+    <dd>{{ warehouse.updated_at|date('d-m-Y H:i:s') }}</dd>
+    <dt>Data utworzenia</dt>
+    <dd>{{ warehouse.created_at|date('d-m-Y H:i:s') }}</dd>
+
+    <hr>
+    <a href="{{ path('warehouse_list') }}" class="btn btn-info">Wróć do listy</a>
+
+{% endblock %}

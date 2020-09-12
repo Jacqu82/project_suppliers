@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Finder\WarehouseFinder;
 use App\Form\WarehouseType;
 use App\Manager\WarehouseManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,12 @@ class WarehouseController extends AbstractController
 {
     private $warehouseManager;
 
-    public function __construct(WarehouseManager $warehouseManager)
+    private $warehouseFinder;
+
+    public function __construct(WarehouseManager $warehouseManager, WarehouseFinder $warehouseFinder)
     {
         $this->warehouseManager = $warehouseManager;
+        $this->warehouseFinder = $warehouseFinder;
     }
 
     /**
@@ -39,5 +43,26 @@ class WarehouseController extends AbstractController
         }
 
         return $this->render('warehouse/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/warehouse/show/{id}", name="warehouse_show")
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function show(int $id): Response
+    {
+        return $this->render('warehouse/show.html.twig', ['warehouse' => $this->warehouseFinder->get($id)]);
+    }
+
+    /**
+     * @Route("/warehouse/list", name="warehouse_list")
+     *
+     * @return Response
+     */
+    public function list(): Response
+    {
+        return $this->render('warehouse/list.html.twig', ['warehouses' => $this->warehouseFinder->getAll()]);
     }
 }

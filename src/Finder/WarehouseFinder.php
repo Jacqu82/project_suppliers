@@ -11,24 +11,25 @@ use PDO;
 /**
  * @author Jacek Wesołowski <jacqu25@yahoo.com>
  */
-class SupplierFinder extends AbstractFinder implements FinderInterface
+class WarehouseFinder extends AbstractFinder implements FinderInterface
 {
     public function getAlias(): string
     {
-        return 's';
+        return 'w';
     }
 
     public function getTable(): string
     {
-        return 'supplier';
+        return 'warehouse';
     }
 
     public function getAll(): array
     {
         $queryBuilder = $this->createQueryBuilder();
         $queryBuilder
-            ->select(sprintf('%s.*', $this->getAlias()))
-            ->from($this->getTable(), $this->getAlias());
+            ->select(sprintf('%s.*, s.name as supplier_name', $this->getAlias()))
+            ->from($this->getTable(), $this->getAlias())
+            ->join($this->getAlias(), 'supplier', 's', sprintf('%s.supplier_id = s.id', $this->getAlias()));
 
         return $queryBuilder->execute()->fetchAll();
     }
@@ -37,21 +38,22 @@ class SupplierFinder extends AbstractFinder implements FinderInterface
     {
         $queryBuilder = $this->createQueryBuilder();
         $queryBuilder
-            ->select(sprintf('%s.*', $this->getAlias()))
+            ->select(sprintf('%s.*, s.name as supplier_name', $this->getAlias()))
             ->from($this->getTable(), $this->getAlias())
+            ->join($this->getAlias(), 'supplier', 's', sprintf('%s.supplier_id = s.id', $this->getAlias()))
             ->andWhere(sprintf('%s.id = :id', $this->getAlias()))
             ->setParameter('id', $id, PDO::PARAM_INT);
 
         return $queryBuilder->execute()->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function countAll()
-    {
-        $queryBuilder = $this->createQueryBuilder();
-        $queryBuilder
-            ->select('COUNT(id) as count')
-            ->from('supplier', 's');
-
-        return $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
-    }
+//    public function countAll()
+//    {
+//        $queryBuilder = $this->createQueryBuilder();
+//        $queryBuilder
+//            ->select('COUNT(id) as count')
+//            ->from('supplier', 's');
+//
+//        return $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
+//    }
 }

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table class="table table-striped">
+        <tr>
+            <th>Magazyn</th>
+            <th>Dostawca</th>
+            <th>Data aktualizacji</th>
+            <th>Data utworzenia</th>
+{#            <th>Akcje</th>#}
+        </tr>
+        {% for warehouse in warehouses %}
+            <tr>
+                <td><a href="{{ path('warehouse_show', {id: warehouse.id}) }}" class="btn btn-secondary">{{ warehouse.name }}</a></td>
+                <td>{{ warehouse.supplier_name }}</td>
+                <td>{{ warehouse.updated_at|date('d-m-Y H:i:s') }}</td>
+                <td>{{ warehouse.created_at|date('d-m-Y H:i:s') }}</td>
+{#                <td>#}
+{#                    <a href="{{ path('supplier_edit', {id: supplier.id}) }}" class="btn btn-warning">Edytuj</a>#}
+{#                    <a href="{{ path('supplier_delete', {id: supplier.id}) }}" class="btn btn-danger js-supplier-delete">Usuń</a>#}
+{#                </td>#}
+            </tr>
+        {% endfor %}
+    </table>
+
+{#    <h4>Łączna liczba dostawców: <span class="js-count-suppliers">{{ suppliers|length }}</span></h4>#}
+
+    <hr>
+    <a href="{{ path('warehouse_new') }}" class="btn btn-success">Dodaj nowy</a>
+
+{% endblock %}

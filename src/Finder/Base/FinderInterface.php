@@ -9,6 +9,10 @@ namespace App\Finder\Base;
  */
 interface FinderInterface
 {
+    public function getAlias(): string;
+
+    public function getTable(): string;
+
     public function getAll(): array;
 
     public function get(int $id): array;
