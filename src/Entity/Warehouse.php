@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=WarehouseRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Warehouse
 {
@@ -29,7 +30,7 @@ class Warehouse
 
     /**
      * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="warehouses")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $supplier;
 

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.supplier) }}
+    <button type="submit" class="btn btn-success" formnovalidate>Dodaj</button>
+    {{ form_end(form) }}
+
+    <hr>
+{#    <a href="{{ path('supplier_list') }}" class="btn btn-info">Wróć do listy</a>#}
+
+{% endblock %}
