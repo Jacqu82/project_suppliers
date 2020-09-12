@@ -5,16 +5,23 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Supplier;
+use App\Validator\Constraints\ContainsAlphanumeric;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SupplierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
+            ->add('name', null, [
+                'constraints' => [
+                    new ContainsAlphanumeric(),
+                    new NotBlank(['message' => 'Halo! pusta nazwa?'])
+                ]
+            ])
         ;
     }
 
