@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=SourceRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Source
 {
