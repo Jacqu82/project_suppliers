@@ -39,7 +39,11 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
+            $this->addFlash('success', 'Udana rejestracja w naszym smerfastycznym serwisie');
+
             return $this->redirectToRoute('homepage');
+        } else {
+            $this->addFlash('error', 'Wypełnij poprawnie wszystkie pola formularza');
         }
 
         return $this->render(
