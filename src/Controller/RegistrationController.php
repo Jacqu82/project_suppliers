@@ -25,24 +25,23 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            $this->addFlash('success', 'Udana rejestracja w naszym smerfastycznym serwisie');
+                $this->addFlash('success', 'Udana rejestracja w naszym smerfastycznym serwisie');
 
-            return $this->redirectToRoute('homepage');
-        } else {
+                return $this->redirectToRoute('homepage');
+            }
             $this->addFlash('error', 'Wypełnij poprawnie wszystkie pola formularza');
         }
 
