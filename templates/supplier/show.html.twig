@@ -12,6 +12,8 @@
     <dd>{{ supplier.updated_at|date('d-m-Y H:i:s') }}</dd>
     <dt>Data utworzenia</dt>
     <dd>{{ supplier.created_at|date('d-m-Y H:i:s') }}</dd>
+    <dt>Magazyny</dt>
+    <dd>{% for warehouse in warehouses %} {{ warehouse.name }}{% if not loop.last %}, {% endif %} {% endfor %}</dd>
 
     <hr>
     <a href="{{ path('supplier_list') }}" class="btn btn-info">Wróć do listy</a>

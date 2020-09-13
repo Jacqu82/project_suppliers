@@ -34,4 +34,10 @@ class WarehouseManager
 
         $this->entityManager->flush();
     }
+
+    public function remove(Warehouse $warehouse): void
+    {
+        $this->entityManager->remove($warehouse);
+        $this->entityManager->flush();
+    }
 }

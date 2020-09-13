@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Warehouse;
 use App\Finder\WarehouseFinder;
 use App\Form\WarehouseType;
 use App\Manager\WarehouseManager;
@@ -64,5 +65,37 @@ class WarehouseController extends AbstractController
     public function list(): Response
     {
         return $this->render('warehouse/list.html.twig', ['warehouses' => $this->warehouseFinder->getAll()]);
+    }
+
+    /**
+     * @Route("/warehouse/edit/{id}", name="warehouse_edit")
+     *
+     * @param Request $request
+     * @param Warehouse $warehouse
+     * @return Response
+     */
+    public function edit(Request $request, Warehouse $warehouse): Response
+    {
+        $form = $this->createForm(WarehouseType::class, $warehouse);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->warehouseManager->create($form);
+        }
+
+        return $this->render('warehouse/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/warehouse/delete/{id}", name="warehouse_delete")
+     *
+     * @param Warehouse $warehouse
+     * @return Response
+     */
+    public function delete(Warehouse $warehouse): Response
+    {
+        $this->warehouseManager->remove($warehouse);
+
+        return new Response($this->warehouseFinder->countAll());
     }
 }

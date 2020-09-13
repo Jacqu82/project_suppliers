@@ -50,7 +50,7 @@ class SupplierFinder extends AbstractFinder implements FinderInterface
         $queryBuilder = $this->createQueryBuilder();
         $queryBuilder
             ->select('COUNT(id) as count')
-            ->from('supplier', 's');
+            ->from($this->getTable(), $this->getAlias());
 
         return $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
     }

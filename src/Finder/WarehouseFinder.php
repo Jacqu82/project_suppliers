@@ -47,13 +47,25 @@ class WarehouseFinder extends AbstractFinder implements FinderInterface
         return $queryBuilder->execute()->fetch(PDO::FETCH_ASSOC);
     }
 
-//    public function countAll()
-//    {
-//        $queryBuilder = $this->createQueryBuilder();
-//        $queryBuilder
-//            ->select('COUNT(id) as count')
-//            ->from('supplier', 's');
-//
-//        return $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
-//    }
+    public function countAll()
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder
+            ->select('COUNT(id) as count')
+            ->from($this->getTable(), $this->getAlias());
+
+        return $queryBuilder->execute()->fetch(PDO::FETCH_COLUMN);
+    }
+
+    public function getBySupplier(int $supplierId)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder
+            ->select(sprintf('%s.name', $this->getAlias()))
+            ->from($this->getTable(), $this->getAlias())
+            ->andWhere('w.supplier_id = :supplierId')
+            ->setParameter('supplierId', $supplierId);
+
+        return $queryBuilder->execute()->fetchAll();
+    }
 }

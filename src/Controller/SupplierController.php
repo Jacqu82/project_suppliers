@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Supplier;
 use App\Finder\SupplierFinder;
+use App\Finder\WarehouseFinder;
 use App\Form\SupplierType;
 use App\Manager\SupplierManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,10 +29,19 @@ class SupplierController extends AbstractController
      */
     private $supplierFinder;
 
-    public function __construct(SupplierManager $supplierManager, SupplierFinder $supplierFinder)
-    {
+    /**
+     * @var WarehouseFinder
+     */
+    private $warehouseFinder;
+
+    public function __construct(
+        SupplierManager $supplierManager,
+        SupplierFinder $supplierFinder,
+        WarehouseFinder $warehouseFinder
+    ) {
         $this->supplierManager = $supplierManager;
         $this->supplierFinder = $supplierFinder;
+        $this->warehouseFinder = $warehouseFinder;
     }
 
     /**
@@ -62,7 +72,13 @@ class SupplierController extends AbstractController
      */
     public function show(int $id): Response
     {
-        return $this->render('supplier/show.html.twig', ['supplier' => $this->supplierFinder->get($id)]);
+        return $this->render(
+            'supplier/show.html.twig',
+            [
+                'supplier' => $this->supplierFinder->get($id),
+                'warehouses' => $this->warehouseFinder->getBySupplier($id),
+            ]
+        );
     }
 
     /**
